@@ -1,24 +1,25 @@
+import enum
 import io
 import json
-from base64 import b64encode
-import flask
-from flask import Flask, render_template
-import hdate
-from flask_bootstrap import Bootstrap
-import jewish
-from forms import *
 import os
-import locale
-from pyluach import hebrewcal, dates
+from base64 import b64encode
+
+import flask
+import hdate
+import jewish
 import qrcode
-import enum
+
+from babel.dates import format_date
+from flask import Flask, render_template
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import func
+from pyluach import hebrewcal, dates
 from sqlalchemy import Integer
+from sqlalchemy.sql import func
+
+from forms import *
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-locale.setlocale(locale.LC_ALL, 'fr_FR')
 
 SECRET_KEY = os.urandom(32)
 app = Flask(__name__)
@@ -130,9 +131,9 @@ def get_neshamot():
             else:
                 res['less_than_1year'] = False
 
-            res['date_enterrement_g'] = res['date_enterrement'].to_greg().strftime("%A %d %B %Y").title()
-            res['hazcara11_g'] = res['hazcara11'].to_greg().strftime("%A %d %B %Y").title()
-            res['hazcara11_adar_g'] = res['hazcara11_adar'].to_greg().strftime("%A %d %B %Y").title()
+            res['date_enterrement_g'] = format_date(res['date_enterrement'].to_pydate(), format='long', locale='fr_FR').title()
+            res['hazcara11_g'] = format_date(res['hazcara11'].to_pydate(), format='full', locale='fr_FR').title()
+            res['hazcara11_adar_g'] = format_date(res['hazcara11_adar'].to_pydate(), format='full', locale='fr_FR').title()
 
             res['date_enterrement'] = change_date(res['date_enterrement']).__str__()
             res['hazcara11'] = change_date(res['hazcara11']).__str__()
@@ -164,9 +165,9 @@ def get_neshamot():
         else:
             res['show_adar'] = res['hazcara1'] != res['hazcara1_adar']
 
-        res['date_deces_g'] = res['date_deces'].to_greg().strftime("%A %d %B %Y").title()
-        res['hazcara1_g'] = res['hazcara1'].to_greg().strftime("%A %d %B %Y").title()
-        res['hazcara1_adar_g'] = res['hazcara1_adar'].to_greg().strftime("%A %d %B %Y").title()
+        res['date_deces_g'] = format_date(res['date_deces'].to_pydate(), format='long', locale='fr_FR').title()
+        res['hazcara1_g'] = format_date(res['hazcara1'].to_pydate(), format='full', locale='fr_FR').title()
+        res['hazcara1_adar_g'] = format_date(res['hazcara1_adar'].to_pydate(), format='full', locale='fr_FR').title()
 
         res['date_deces'] = change_date(res['date_deces']).__str__()
         res['hazcara1'] = change_date(res['hazcara1']).__str__()
@@ -247,7 +248,7 @@ def index(error=None):
     return render_template(
         'index.html',
         zmanim=times,
-        now=date_today.strftime("%A %d %B").title(),
+        now=format_date(date_today, format='full', locale='fr_FR').title(),
         nowH=change_date(today_heb),
         nowH2=h,
         parasha=h.parasha,
@@ -259,11 +260,11 @@ def index(error=None):
                 h.upcoming_yom_tov.gdate.day
             ).to_heb()
         ),
-        upcoming_date_g=dates.GregorianDate(
+        upcoming_date_g=format_date(dates.GregorianDate(
                 h.upcoming_yom_tov.gdate.year,
                 h.upcoming_yom_tov.gdate.month,
                 h.upcoming_yom_tov.gdate.day
-            ).strftime("%A %d %B").title(),
+            ).to_pydate(), format='full', locale='fr_FR').title(),
         neshamot=get_neshamot(),
         qrcode_url=qrcode_url,
         location=c
