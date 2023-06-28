@@ -6,7 +6,7 @@ WORKDIR /app
 #COPY ./cert.pem /etc/ssl/certs/cert.pem
 #COPY ./privkey.pem /etc/ssl/private/privkey.pem
 
-RUN pip install --upgrade pip && pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip3 install --upgrade pip && pip3 install --no-cache-dir --upgrade -r /app/requirements.txt
 
 ENV PYTHONPATH=$PYTHONPATH:/app
 
