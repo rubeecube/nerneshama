@@ -18,7 +18,7 @@ from sqlalchemy import Integer
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+locale.setlocale(locale.LC_ALL, 'fr_FR')
 
 SECRET_KEY = os.urandom(32)
 app = Flask(__name__)
