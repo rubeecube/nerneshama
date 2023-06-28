@@ -1,0 +1,70 @@
+{% macro render_submit(field) %}
+  <div class="form-row">
+    <div class="form-group col-md-12">
+   {{ field(class="btn btn-primary", **kwargs)|safe }}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro render_field(field) %}
+  <div class="form-row">
+    <div class="form-group col-md-12">
+    {{field.label}}
+    {{field(class="form-control", **kwargs)|safe}}
+    <small id="{{field.name}}-help" class="form-text text-muted">{{field.description}}</small>
+  </div>
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro render_boolfield(field) %}
+  <div class="form-row">
+    <div class="form-group col-md-12">
+    {{field(class="form-check", **kwargs)|safe}}
+    {{field.label}}
+    <small id="{{field.name}}-help" class="form-text text-muted">{{field.description}}</small>
+  </div>
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro render_datefield(field_d, field_m, field_y) %}
+<div class="form-row">
+    <div class="form-group col-md-12">
+      {{field_d.label}}
+      <small id="{{field_d.name}}-help" class="form-text text-muted">{{field_d.description}}</small>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-3">
+      {{field_d(class="form-control form-control-inline", **kwargs)|safe}}
+    </div>
+    <div class="form-group col-md-6">
+      {{field_m(class="form-control form-control-inline", **kwargs)|safe}}
+    </div>
+    <div class="form-group col-md-3">
+      {{field_y(class="form-control form-control-inline", **kwargs)|safe}}
+    </div>
+    <div class="form-group col-md-12">
+    </div>
+  {% if field_d.errors %}
+    <ul class=errors>
+    {% for error in field_d.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </div>
+{% endmacro %}

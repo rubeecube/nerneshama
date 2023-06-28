@@ -1,0 +1,88 @@
+{% macro render_neshama_aux(neshama, ratio) %}
+    {% if neshama.less_than_1year %}
+        {% set hazcara = neshama.hazcara11 - neshama.hazcara11_g %}
+    {% else  %}
+        {% set hazcara = neshama.hazcara1_g %}
+    {% endif %}
+    {{ render_html_skeleton(ratio, neshama.nom_francais, neshama.nom_hebreu, neshama.date_deces_g, neshama.date_deces, hazcara) }}
+{% endmacro %}
+
+{% macro render_neshama(neshama, ratio) %}
+    {{ render_neshama_aux(neshama, ratio) }}
+{% endmacro %}
+
+
+{% macro render_neshamot(screens, neshamot, start) %}
+	{% set i = namespace(value=0) %}
+	{% set start = start % neshamot|length %}
+	{% for neshama in neshamot[start:] %}
+		{% if i.value < screens|length %}
+			<div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
+				{% if i.value == 0 %}
+					{{ render_neshama(neshama, 2) }}
+				{% else %}
+					{{ render_neshama(neshama, 1) }}
+				{% endif %}
+			</div>
+			{% set i.value = i.value + 1 %}
+		{% endif %}
+	{% endfor %}
+	{% if i.value < screens|length and neshamot|length > screens|length %}
+		{% for neshama in neshamot %}
+			{% if i.value < screens|length %}
+				<div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
+                    {% if i.value == 0 %}
+                        {{ render_neshama(neshama, 2) }}
+                    {% else %}
+                        {{ render_neshama(neshama, 1) }}
+                    {% endif %}
+                </div>
+				{% set i.value = i.value + 1 %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+{% endmacro %}
+
+{% macro render_html_skeleton(ratio=1, nom_francais="", nom_hebreu="", date_deces_g="", date_deces="", hazcara="") %}
+    <div class="wrapper_flex">
+        <div class="box_header">
+            <div style="width:50%; float:left; text-align: left;">
+                <span class="text" style="font-size: {{ratio*10}}px;">Pour l’élévation de l’âme de</span>
+            </div>
+            <div style="width:50%; float:left; text-align: right;">
+                <span class="text" style="font-size: {{ratio*10}}px;">לעילוי נשמת</span>
+            </div>
+        </div>
+
+        <div class="box_content">
+            <div class="text" style="font-size: {{ratio*20}}px; text-align:center">
+                <span class="autofit"><span class="nom_francais">{{nom_francais}}</span>&nbsp;Z"L</span>
+            </div>
+            <div class="text" style="font-size: {{ratio*20}}px; text-align:center">
+                <span class="autofit"><span class="nom_hebreu">{{nom_hebreu}}</span>&nbsp;ז"ל</span>
+            </div>
+            <div class="text" style="font-size: {{ratio*10}}px; text-align:center">
+                <span>qui nous a quitté le</span>
+            </div>
+            <div class="text" style="font-size: {{ratio*15}}px; text-align:center">
+                <span><span class="date_deces_g">{{date_deces_g}}</span> - <span class="date_deces">{{date_deces}}</span></span> <br>
+            </div>
+            <div class="text" style="font-size: {{ratio*15}}px; text-align:center">
+                <span class="autofit">
+                Date de hazcara:
+                <span class="hazcara">{{hazcara}}</span>*.
+                </span>
+            </div>
+            <div style="font-size: {{ratio*10}}px; text-align: right;">*Le Kadish sera lu à partir du shabbat précedant cette date.</div>
+        </div>
+
+        <div class="box_footer">
+            <div style="width:50%; float:left; text-align: left;">
+                <div style="font-size: {{ratio*10}}px; text-align: left;">Que sa memoire soit bénie.</div>
+            </div>
+            <div style="width:50%; float:left; text-align: right;">
+                <span class="text" style="font-size: {{ratio*10}}px; text-align: righ;">ת.נ.צ.ב.ה.</span>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

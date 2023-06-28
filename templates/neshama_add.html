@@ -1,0 +1,47 @@
+{% from "_formhelpers.html" import render_field, render_datefield, render_boolfield, render_submit %}
+
+{% extends "bootstrap/base.html" %}
+
+{% block styles %}
+{{super()}}
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script>
+</script>
+{% endblock %}
+
+{% block title %} {{form_neshama.name}} {% endblock %}
+{% block content %}
+<div style="padding:2em">
+    {% include 'navbar_reports.html' %}
+
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        <p>
+            {{error}}
+        </p>
+    </div>
+    {% endif %}
+<h1>{{form_neshama.name}}</h1>
+<form action="/neshama_add" method="POST" class="card-body">
+    <div class="input-group mb-3">
+        {{ render_field(form_neshama.gender) }}
+        {{ render_field(form_neshama.email) }}
+        {{ render_field(form_neshama.phone) }}
+        {{ render_field(form_neshama.name_fr) }}
+        {{ render_field(form_neshama.name_he) }}
+        {{ render_datefield(form_neshama.date_niftar_he_d, form_neshama.date_niftar_he_m, form_neshama.date_niftar_he_y) }}
+        {{ render_field(form_neshama.date_niftar_fr) }}
+        {{ render_boolfield(form_neshama.erev_niftar) }}
+        {{ render_datefield(form_neshama.date_levaya_he_d, form_neshama.date_levaya_he_m, form_neshama.date_levaya_he_y) }}
+        {{ render_field(form_neshama.date_levaya_fr) }}
+        {{ render_boolfield(form_neshama.erev_levaya) }}
+        {{ render_boolfield(form_neshama.opt_in_1) }}
+        {{ render_boolfield(form_neshama.opt_in_2) }}
+        {{ render_submit(form_neshama.submit) }} <br/>
+    </div>
+</form>
+</div>
+{% endblock %}
