@@ -1,6 +1,6 @@
 FROM tiangolo/uwsgi-nginx:python3.11
 
-COPY /app/. /app/
+COPY app /app/
 WORKDIR /app
 
 #COPY ./cert.pem /etc/ssl/certs/cert.pem
