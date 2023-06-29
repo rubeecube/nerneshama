@@ -13,7 +13,7 @@ from babel.dates import format_date
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from pyluach import hebrewcal, dates
+from pyluach import hebrewcal
 from sqlalchemy import Integer
 from sqlalchemy.sql import func
 
