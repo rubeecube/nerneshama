@@ -27,7 +27,7 @@ else
 
   content_server=$content_server'    location / {\n'
   content_server=$content_server'        proxy_set_header Host $host;\n'
-  content_server=$content_server'        proxy_pass http://0.0.0.0:5000;\n'
+  content_server=$content_server'        proxy_pass http://127.0.0.1:5000;\n'
   content_server=$content_server'        proxy_redirect off;\n'
   content_server=$content_server'    }\n'
 
