@@ -16,9 +16,6 @@
 				if( $(this).parent().width() < $(this).width() ) {
 					$(this).css('font-size', (parseInt($(this).css('font-size')) * $(this).parent().width()/$(this).width())*0.8 + "px" );
 				}else{
-					console.log($(this).text() + " " + $(this).width() + " " + $(this).parent().width());
-					console.log($(this).css('font-size') + " " + parseFloat($(this).css('font-size')));
-					console.log($(this).css('font-size') + " " + $(this).parent().width()/$(this).width());
 					$(this).css('font-size', (Math.floor(parseFloat($(this).css('font-size'))*$(this).parent().width()/$(this).width()))*0.8 + "px" );
 				}
 			});
@@ -54,9 +51,6 @@
 								if( $(this).parent().width()*0.8 < $(this).width() ) {
 									$(this).css('font-size', (parseInt($(this).css('font-size')) * $(this).parent().width()/$(this).width())*0.8 + "px" );
 								}else{
-									console.log($(this).text() + " " + $(this).width() + " " + $(this).parent().width());
-									console.log($(this).css('font-size') + " " + parseFloat($(this).css('font-size')));
-									console.log($(this).css('font-size') + " " + $(this).parent().width()/$(this).width());
 									$(this).css('font-size', (Math.floor(parseFloat($(this).css('font-size'))*$(this).parent().width()/$(this).width()))*0.8 + "px" );
 								}
 							});
