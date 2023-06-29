@@ -3,10 +3,10 @@ FROM tiangolo/uwsgi-nginx:python3.11
 COPY . /app/
 WORKDIR /app
 
-#COPY ./cert.pem /etc/ssl/certs/cert.pem
-#COPY ./privkey.pem /etc/ssl/private/privkey.pem
+COPY ./cert.pem /etc/ssl/certs/cert.pem
+COPY ./privkey.pem /etc/ssl/private/privkey.pem
 
-RUN pip3 install --upgrade pip && pip3 install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip3 install --upgrade pip && pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 ENV PYTHONPATH=$PYTHONPATH:/app
 
