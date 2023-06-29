@@ -1,6 +1,6 @@
 FROM tiangolo/uwsgi-nginx:python3.11
 
-RUN "sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privkey.key -out cert.pem -subj '/CN=ec2-18-209-5-51.compute-1.amazonaws.com'"
+#RUN "sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privkey.key -out cert.pem -subj '/CN=ec2-18-209-5-51.compute-1.amazonaws.com'"
 
 COPY app /app/
 WORKDIR /app
