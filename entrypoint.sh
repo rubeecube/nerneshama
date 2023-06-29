@@ -3,7 +3,7 @@ set -e
 
 /uwsgi-nginx-entrypoint.sh
 
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/privkey.key -out /etc/ssl/certs/cert.pem -subj "ec2-18-209-5-51.compute-1.amazonaws.com"
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/privkey.key -out /etc/ssl/certs/cert.pem -subj '/CN=ec2-18-209-5-51.compute-1.amazonaws.com'
 
 if [ -f /app/nginx.conf ]; then
   cp /app/nginx.conf /etc/nginx/conf.d/nginx.conf
