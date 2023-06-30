@@ -1,7 +1,5 @@
 FROM python:3.11-bullseye
 
-RUN apt-get install supervisord
-
 LABEL maintainer="Sebastian Ramirez <tiangolo@gmail.com>"
 
 COPY install-nginx-debian.sh /
