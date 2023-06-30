@@ -1,0 +1,14 @@
+requests
+WTForms
+Flask
+Flask-Bootstrap
+Flask-SQLAlchemy
+waitress
+pytz
+hdate
+jewish
+pyluach
+qrcode
+python-dateutil
+SQLAlchemy
+Babel
