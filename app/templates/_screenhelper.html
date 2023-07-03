@@ -7,29 +7,20 @@
 {% endmacro %}
 
 
-{% macro render_neshamot(screens, neshamot, start) %}
+{% macro render_neshamot(screens, neshamot) %}
 	{% set i = namespace(value=0) %}
     {% if neshamot|length == 0 %}
         {% for screen in screens %}
             <div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
-                {% if i.value == 0 %}
-                    {{ render_html_skeleton(2) }}
-                {% else %}
-                    {{ render_html_skeleton(1) }}
-                {% endif %}
+                {{ render_html_skeleton(1) }}
             </div>
             {% set i.value = i.value + 1 %}
         {% endfor %}
     {% else %}
-        {% set start = start % neshamot|length %}
-        {% for neshama in neshamot[start:] %}
+        {% for neshama in neshamot %}
             {% if i.value < screens|length %}
                 <div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
-                    {% if i.value == 0 %}
-                        {{ render_neshama(neshama, 2) }}
-                    {% else %}
-                        {{ render_neshama(neshama, 1) }}
-                    {% endif %}
+                    {{ render_neshama(neshama, 1) }}
                 </div>
                 {% set i.value = i.value + 1 %}
             {% endif %}
@@ -38,11 +29,7 @@
             {% for neshama in neshamot %}
                 {% if i.value < screens|length %}
                     <div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
-                        {% if i.value == 0 %}
-                            {{ render_neshama(neshama, 2) }}
-                        {% else %}
-                            {{ render_neshama(neshama, 1) }}
-                        {% endif %}
+                        {{ render_neshama(neshama, 1) }}
                     </div>
                     {% set i.value = i.value + 1 %}
                 {% endif %}

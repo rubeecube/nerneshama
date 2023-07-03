@@ -222,6 +222,18 @@ def run_ajax_data():
 
 @app.route('/', methods=['GET'])
 def index(error=None):
+    screen = None
+    try:
+        if 'screen' in flask.request.args.keys():
+            screen = int(flask.request.args['screen'])
+            if screen not in [1, 2]:
+                screen = None
+    except Exception:
+        pass
+
+    if screen is None:
+        return render_template('error.html')
+
     db.create_all()
 
     c = hdate.Location(
@@ -234,8 +246,26 @@ def index(error=None):
     today_heb = dates.GregorianDate(date_today.year, date_today.month, date_today.day).to_heb()
 
     z = hdate.Zmanim(date=date_today, location=c, hebrew=False)
-    times = {k: v.strftime("%H:%M") for k, v in z.zmanim.items()}
     h = hdate.HDate(date_today, hebrew=False)
+
+    times = {k: v.strftime("%H:%M") for k, v in z.zmanim.items()}
+    times['now_g'] = format_date(date_today, format='full', locale='fr_FR').title()
+    times['now'] = change_date(today_heb)
+    times['location_s'] = 'Tel Aviv - 124 Rothschild'
+    times['parasha'] = h.parasha
+    times['upcoming'] = h.upcoming_yom_tov.holiday_description
+    times['upcoming_date'] = change_date(
+            dates.GregorianDate(
+                h.upcoming_yom_tov.gdate.year,
+                h.upcoming_yom_tov.gdate.month,
+                h.upcoming_yom_tov.gdate.day
+            ).to_heb()
+        )
+    times['upcoming_date_g'] = format_date(dates.GregorianDate(
+                h.upcoming_yom_tov.gdate.year,
+                h.upcoming_yom_tov.gdate.month,
+                h.upcoming_yom_tov.gdate.day
+            ).to_pydate(), format='full', locale='fr_FR').title()
 
     image_io = io.BytesIO()
     qr_object = qrcode.QRCode(version=2, box_size=5, border=0)
@@ -248,26 +278,11 @@ def index(error=None):
     return render_template(
         'index.html',
         zmanim=times,
-        now=format_date(date_today, format='full', locale='fr_FR').title(),
-        nowH=change_date(today_heb),
         nowH2=h,
-        parasha=h.parasha,
-        upcoming=h.upcoming_yom_tov.holiday_description,
-        upcoming_date=change_date(
-            dates.GregorianDate(
-                h.upcoming_yom_tov.gdate.year,
-                h.upcoming_yom_tov.gdate.month,
-                h.upcoming_yom_tov.gdate.day
-            ).to_heb()
-        ),
-        upcoming_date_g=format_date(dates.GregorianDate(
-                h.upcoming_yom_tov.gdate.year,
-                h.upcoming_yom_tov.gdate.month,
-                h.upcoming_yom_tov.gdate.day
-            ).to_pydate(), format='full', locale='fr_FR').title(),
         neshamot=get_neshamot(),
         qrcode_url=qrcode_url,
-        location=c
+        location=c,
+        screen=screen
     )
 
 

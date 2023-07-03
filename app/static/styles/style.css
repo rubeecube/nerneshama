@@ -55,3 +55,13 @@
 .box_footer  {
     flex-grow: 1;
 }
+
+.image_shabbat{
+    padding:0;
+    text-align:right;
+}
+
+.image_shabbat img{
+    padding:0;
+    max-height: -webkit-fill-available;
+}

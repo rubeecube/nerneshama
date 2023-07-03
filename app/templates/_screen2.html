@@ -1,0 +1,112 @@
+{% from "_screenhelper.html" import render_neshamot %}
+
+{% macro render_screen2(zmanim, qrcode_url) %}
+<div class="wrapper_grid" style="width:auto; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr);">
+	  <div class="grid_box" style="grid-column: 1; grid-row: 1/4;">
+		<div id="divTileZmanim">
+		  <table id="tableZmanim" width="100%" cellspacing="0" cellpadding="2" border="0">
+			  <colgroup align="left"></colgroup><colgroup align="right"></colgroup>
+			  <tbody>
+				<tr>
+					<td colspan="3">
+						<table width="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+								<tr>
+									<td align="center">
+										<span>{{ zmanim.location_s }}</span> <br>
+										<span> {{ zmanim.now_g }} - {{ zmanim.now }} </span> <br>
+										<span> Parasha: {{ zmanim.parasha }} </span> <br>
+									</td>
+								</tr>
+							  </tbody>
+						</table>
+					</td>
+				</tr>
+			  </tbody>
+				<tbody>
+				<tr>
+					<td>Alot haShaḥar</td>
+						<td>{{zmanim.first_light}}</td>
+						<td>עלות&nbsp;השחר</td>
+				</tr>
+				<tr>
+						<td>Hanetz</td>
+						<td>{{zmanim.sunrise}}</td>
+						<td>הנץ&nbsp;החמה</td>
+				</tr>
+					<tr class="even">
+						<td>Limite shéma (M"A)</td>
+						<td>{{zmanim.mga_end_shma}}</td>
+					</tr>
+					<tr class="even">
+						<td>Limite shéma (GR"A)</td>
+						<td>{{zmanim.gra_end_shma}}</td>
+					</tr>
+					<tr>
+						<td>Limite tefila (GR"A)</td>
+						<td>{{zmanim.gra_end_tfila}}</td>
+					</tr>
+					<tr class="even">
+						<td>Hatzot</td>
+						<td>{{zmanim.midday}}</td>
+						<td>חצות&nbsp;יום</td>
+					</tr>
+					<tr>
+						<td>Minḥa guedola</td>
+						<td>{{zmanim.big_mincha}}</td>
+						<td>מנחה&nbsp;גדולה</td>
+					</tr>
+					<tr>
+						<td>Minḥa ketana</td>
+						<td>{{zmanim.small_mincha}}</td>
+						<td>מנחה&nbsp;קטנה</td>
+					</tr>
+					<tr>
+						<td>Plag haminḥa (GR"A)</td>
+						<td>{{zmanim.plag_mincha}}</td>
+						<td>פלג&nbsp;המנחה</td>
+					</tr>
+					<tr class="even">
+						<td>Shqi'â</td>
+						<td>{{zmanim.sunset}}</td>
+						<td>שקיעת החמה</td>
+					</tr>
+					<tr>
+						<td>Tzeit hacokhavim</td>
+						<td>{{zmanim.stars_out}}</td>
+					</tr>
+					<tr>
+						<td>Hatzot layla</td>
+						<td>{{zmanim.midnight}}</td>
+					</tr>
+					<tr>
+							<td align="center" colspan="2">
+								<span> Prochain Yom Tov <br> {{ zmanim.upcoming }} <br> {{ zmanim.upcoming_date_g }} - {{ zmanim.upcoming_date }} </span>
+							</td>
+						</tr>
+					<tr>
+							<td align="center" colspan="2">
+								<span> Prochain Rosh Hodesh <br> ... <br> Molad: <br> ... </span>
+							</td>
+						</tr>
+				</tbody>
+			  </table>
+			 </div>
+	  </div>
+	  <div class="grid_box" style="grid-column: 2/4; grid-row: 1/3;">
+
+	  </div>
+	  <div class="grid_box" style="grid-column: 2/4; grid-row: 3/5;">
+
+	  </div>
+	  <div class="grid_box" style="grid-column: 1; grid-row: 4;">
+		  <center>
+			  Ajouter une date personalisée:
+			 <image src="{{ qrcode_url }}"></image>
+		  </center>
+	  </div>
+	  <div class="image_shabbat" style="grid-column: 4; grid-row: 1/5;">
+		 <image src="https://static.wixstatic.com/media/942ab4_96f50e9f6a10432d87d07f371a17ee1a~mv2.jpg/v1/fill/w_613,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/chabbat%20horaires_07-07-2023.jpg"></image>
+	  </div>
+</div>
+{% endmacro %}
