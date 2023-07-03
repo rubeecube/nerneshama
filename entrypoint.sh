@@ -10,12 +10,12 @@ else
   content_server=$content_server'server {\n'
   content_server=$content_server'    listen 80;\n'
   content_server=$content_server"    server_name ec2-18-209-5-51.compute-1.amazonaws.com;\n"
-  content_server=$content_server'    return 301 https://ec2-18-209-5-51.compute-1.amazonaws.com$request_uri;\n'
+  content_server=$content_server'    return 301 https://nerneshama.bokobza.info$request_uri;\n'
   content_server=$content_server'}\n'
 
   content_server=$content_server'server {\n'
   content_server=$content_server"    listen 443 ssl default_server;\n"
-  content_server=$content_server"    server_name ec2-18-209-5-51.compute-1.amazonaws.com;\n"
+  content_server=$content_server"    server_name nerneshama.bokobza.info;\n"
   content_server=$content_server"    ssl_protocols    TLSv1.2;\n"
   content_server=$content_server"    ssl_ciphers AES256+EECDH:AES256+EDH:!aNULL;\n"
   content_server=$content_server"    ssl_prefer_server_ciphers    on;\n"
