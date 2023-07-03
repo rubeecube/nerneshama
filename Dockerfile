@@ -8,8 +8,8 @@ FROM tiangolo/uwsgi-nginx:python3.11
 COPY app /app/
 WORKDIR /app
 
-COPY ../certs/live/nerneshama.bokobza.info/fullchain.pem /etc/ssl/certs/cert.pem
-COPY ../certs/live/nerneshama.bokobza.info/privkey.pem /etc/ssl/private/privkey.pem
+COPY ~/certs/live/nerneshama.bokobza.info/fullchain.pem /etc/ssl/certs/cert.pem
+COPY ~/certs/live/nerneshama.bokobza.info/privkey.pem /etc/ssl/private/privkey.pem
 
 RUN pip install --upgrade pip && pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
