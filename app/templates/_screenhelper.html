@@ -1,10 +1,5 @@
 {% macro render_neshama_aux(neshama, ratio) %}
-    {% if neshama.less_than_1year %}
-        {% set hazcara = neshama.hazcara11 - neshama.hazcara11_g %}
-    {% else  %}
-        {% set hazcara = neshama.hazcara1_g %}
-    {% endif %}
-    {{ render_html_skeleton(ratio, neshama.nom_francais, neshama.nom_hebreu, neshama.date_deces_g, neshama.date_deces, hazcara) }}
+    {{ render_html_skeleton(ratio, neshama.nom_francais, neshama.nom_hebreu, neshama.date_niftar_g, neshama.date_niftar, neshama.date_hazcara_g) }}
 {% endmacro %}
 
 {% macro render_neshama(neshama, ratio) %}
@@ -43,7 +38,7 @@
 	{% endif %}
 {% endmacro %}
 
-{% macro render_html_skeleton(ratio=1, nom_francais="", nom_hebreu="", date_deces_g="", date_deces="", hazcara="") %}
+{% macro render_html_skeleton(ratio=1, nom_francais="", nom_hebreu="", date_niftar_g="", date_niftar="", date_hazcara_g="") %}
     <div class="wrapper_flex">
         <div class="box_header">
             <div style="width:50%; float:left; text-align: left;">
@@ -65,12 +60,12 @@
                 <span>qui nous a quitté le</span>
             </div>
             <div class="text" style="font-size: {{ratio*15}}px; text-align:center">
-                <span><span class="date_deces_g">{{date_deces_g}}</span> - <span class="date_deces">{{date_deces}}</span></span> <br>
+                <span><span class="date_niftar_g">{{date_niftar_g}}</span> - <span class="date_niftar">{{date_niftar}}</span></span> <br>
             </div>
             <div class="text" style="font-size: {{ratio*15}}px; text-align:center">
                 <span class="autofit">
                 Date de hazcara:
-                <span class="hazcara">{{hazcara}}</span>*.
+                <span class="date_hazcara_g">{{date_hazcara_g}}</span>*.
                 </span>
             </div>
             <div style="font-size: {{ratio*10}}px; text-align: right;">*Le Kadish sera lu à partir du shabbat précedant cette date.</div>
