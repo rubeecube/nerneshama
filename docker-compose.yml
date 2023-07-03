@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    image: ner_neshama
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./app/db:/app/db

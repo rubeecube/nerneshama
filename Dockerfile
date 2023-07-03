@@ -1,6 +1,9 @@
-FROM tiangolo/uwsgi-nginx:python3.10
+FROM tiangolo/uwsgi-nginx:python3.11
 
 #RUN "sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privkey.pem -out cert.pem -subj '/CN=ec2-18-209-5-51.compute-1.amazonaws.com'"
+
+#alias launch="cd ~/ner_neshama/ ; sudo docker stop ner_neshama ; sudo docker rm ner_neshama ; git pull && sudo docker build -t ner_neshama . && sudo docker run -d -p 80:80 -p 443:443 --name ner_neshama -v ~/ner_neshama/db:/app/db ner_neshama"
+#alias launch_attached="cd ~/ner_neshama/ ; sudo docker stop ner_neshama ; sudo docker rm ner_neshama ; git pull && sudo docker build -t ner_neshama . && sudo docker run -d -p 80:80 -p 443:443 --name ner_neshama -v ~/ner_neshama/db:/app/db ner_neshama"
 
 COPY app /app/
 WORKDIR /app
@@ -8,7 +11,7 @@ WORKDIR /app
 COPY ./cert.pem /etc/ssl/certs/cert.pem
 COPY ./privkey.pem /etc/ssl/private/privkey.pem
 
-RUN pip3 install --upgrade pip && pip3 install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 ENV PYTHONPATH=$PYTHONPATH:/app
 
