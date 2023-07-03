@@ -7,11 +7,11 @@ if [ -f /app/nginx.conf ]; then
   cp /app/nginx.conf /etc/nginx/conf.d/nginx.conf
 else
   content_server='\n'
-  content_server=$content_server'server {\n'
-  content_server=$content_server'    listen 80;\n'
-  content_server=$content_server"    server_name ner_neshama.bokobza.info;\n"
-  content_server=$content_server'    return 301 https://ner_neshama.bokobza.info$request_uri;\n'
-  content_server=$content_server'}\n'
+#  content_server=$content_server'server {\n'
+#  content_server=$content_server'    listen 80;\n'
+#  content_server=$content_server"    server_name ner_neshama.bokobza.info;\n"
+#  content_server=$content_server'    return 301 https://ner_neshama.bokobza.info$request_uri;\n'
+#  content_server=$content_server'}\n'
 
   content_server=$content_server'server {\n'
   content_server=$content_server"    listen 443 ssl default_server;\n"
