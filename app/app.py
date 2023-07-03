@@ -103,18 +103,15 @@ def get_neshamot():
             int(date_niftar_he_db[2])
         )
 
-        res = {
-            'date_deces': date_niftar_he,
-            'nom_francais': neshama.name_fr,
-            'nom_hebreu': neshama.name_he,
-        }
+        date_niftar = date_niftar_he
 
+        less_than_1year = False
         if neshama.date_levaya_he is None:
             if today_heb < date_niftar_he.add(0, 11):
                 # Can't compute
                 continue
             else:
-                res['less_than_1year'] = False
+                less_than_1year = False
         else:
             date_levaya_he_db = neshama.date_levaya_he.split("-")
             date_levaya_he = dates.HebrewDate(
@@ -122,58 +119,61 @@ def get_neshamot():
                 months_id_hdate_inv[date_levaya_he_db[1]],
                 int(date_levaya_he_db[2])
             )
-            res['date_enterrement'] = date_levaya_he
-            res['hazcara11'] = date_levaya_he.add(0, 11)
-            res['hazcara11_adar'] = date_levaya_he.add(0, 11, adar1=True)
+            date_levaya = date_levaya_he
+            date_hazcara11 = date_levaya_he.add(0, 11)
+            date_hazcara11_adar = date_levaya_he.add(0, 11, adar1=True)
 
-            if today_heb < res['hazcara11'] or today_heb < res['hazcara11_adar']:
-                res['less_than_1year'] = True
+            if today_heb < date_hazcara11 or today_heb < date_hazcara11_adar:
+                less_than_1year = True
             else:
-                res['less_than_1year'] = False
+                less_than_1year = False
 
-            res['date_enterrement_g'] = format_date(res['date_enterrement'].to_pydate(), format='long', locale='fr_FR').title()
-            res['hazcara11_g'] = format_date(res['hazcara11'].to_pydate(), format='full', locale='fr_FR').title()
-            res['hazcara11_adar_g'] = format_date(res['hazcara11_adar'].to_pydate(), format='full', locale='fr_FR').title()
+        date_hazcara1 = date_niftar.add(today_heb.year - date_niftar.year)
+        date_hazcara1_adar = date_niftar.add(today_heb.year - date_niftar.year, adar1=True)
 
-            res['date_enterrement'] = change_date(res['date_enterrement']).__str__()
-            res['hazcara11'] = change_date(res['hazcara11']).__str__()
-            res['hazcara11_adar'] = change_date(res['hazcara11_adar']).__str__()
+        if date_hazcara1.to_greg().to_pydate() < datetime.datetime.now().date():
+            date_hazcara1 = date_hazcara1.add(1)
+            date_hazcara1_adar = date_hazcara1_adar.add(1, adar1=True)
 
-        dm30 = res['date_deces'] - 30
-
-        if hebrewcal.Month(
-            dm30.year,
-            dm30.month
-        ).month == hebrewcal.Month(today_heb.year, today_heb.month).month \
-            or hebrewcal.Month(
-            res['date_deces'].year,
-            res['date_deces'].month
-        ).month == hebrewcal.Month(today_heb.year, today_heb.month).month:
-            res['show'] = True
+        if less_than_1year:
+            show_adar = date_hazcara11 != date_hazcara11_adar
         else:
-            res['show'] = False
+            show_adar = date_hazcara1 != date_hazcara1_adar
 
-        res['hazcara1'] = res['date_deces'].add(today_heb.year - res['date_deces'].year)
-        res['hazcara1_adar'] = res['date_deces'].add(today_heb.year - res['date_deces'].year, adar1=True)
+        date_niftar_g = format_date(date_niftar.to_pydate(), format='long', locale='fr_FR').title()
+        date_niftar = change_date(date_niftar).__str__()
 
-        if res['hazcara1'].to_greg().to_pydate() < datetime.datetime.now().date():
-            res['hazcara1'] = res['hazcara1'].add(1)
-            res['hazcara1_adar'] = res['hazcara1_adar'].add(1, adar1=True)
-
-        if res['less_than_1year']:
-            res['show_adar'] = res['hazcara11'] != res['hazcara11_adar']
+        if less_than_1year:
+            date_sort = datetime.datetime.combine(date_hazcara11.to_pydate(), datetime.datetime.min.time()).timestamp()
+            date_hazcara_g = format_date(date_hazcara11.to_pydate(), format='full', locale='fr_FR').title()
+            date_hazcara = change_date(date_hazcara11).__str__()
+            if show_adar:
+                date_hazcara_g += " - "
+                date_hazcara_g += format_date(date_hazcara11_adar.to_pydate(), format='full', locale='fr_FR').title()
+                date_hazcara += " - "
+                date_hazcara += change_date(date_hazcara11_adar).__str__()
         else:
-            res['show_adar'] = res['hazcara1'] != res['hazcara1_adar']
+            date_sort = datetime.datetime.combine(date_hazcara1.to_pydate(), datetime.datetime.min.time()).timestamp()
+            date_hazcara_g = format_date(date_hazcara1.to_pydate(), format='full', locale='fr_FR').title()
+            date_hazcara = change_date(date_hazcara1).__str__()
+            if show_adar:
+                date_hazcara_g += " - "
+                date_hazcara_g += format_date(date_hazcara1_adar.to_pydate(), format='full', locale='fr_FR').title()
+                date_hazcara += " - "
+                date_hazcara += change_date(date_hazcara1_adar).__str__()
 
-        res['date_deces_g'] = format_date(res['date_deces'].to_pydate(), format='long', locale='fr_FR').title()
-        res['hazcara1_g'] = format_date(res['hazcara1'].to_pydate(), format='full', locale='fr_FR').title()
-        res['hazcara1_adar_g'] = format_date(res['hazcara1_adar'].to_pydate(), format='full', locale='fr_FR').title()
+        neshamot_to_render += [
+            {
+                'nom_francais': neshama.name_fr,
+                'nom_hebreu': neshama.name_he,
+                'date_niftar_g': date_niftar_g,
+                'date_niftar': date_niftar,
+                'date_sort': date_sort,
+                'date_hazcara_g': date_hazcara_g
+            }
+        ]
 
-        res['date_deces'] = change_date(res['date_deces']).__str__()
-        res['hazcara1'] = change_date(res['hazcara1']).__str__()
-        res['hazcara1_adar'] = change_date(res['hazcara1_adar']).__str__()
-
-        neshamot_to_render += [res]
+    neshamot_to_render.sort(key=lambda x: x['date_sort'])
 
     return neshamot_to_render
 
