@@ -1,6 +1,6 @@
 from app import app
 
-debug = True
+debug = False
 
 if debug:
     app.run(debug=True, host='0.0.0.0', port=5000)

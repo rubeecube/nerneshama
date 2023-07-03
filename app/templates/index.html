@@ -13,11 +13,14 @@
     $( document ).ready(function() {
 		for (var i = 0; i < 6; i = i+1){
 			$('#box_' + i + ' .wrapper_flex .box_content .text > span.autofit').each(function(){
+				font_size = 20;
 				if( $(this).parent().width() < $(this).width() ) {
-					$(this).css('font-size', (parseInt($(this).css('font-size')) * $(this).parent().width()/$(this).width())*0.8 + "px" );
+					font_size = (parseInt($(this).css('font-size')) * $(this).parent().width()/$(this).width())*0.8;
 				}else{
-					$(this).css('font-size', (Math.floor(parseFloat($(this).css('font-size'))*$(this).parent().width()/$(this).width()))*0.8 + "px" );
+					font_size = (Math.floor(parseFloat($(this).css('font-size'))*$(this).parent().width()/$(this).width()))*0.8;
 				}
+				font_size = Math.min(font_size, 80);
+				$(this).css('font-size', font_size + "px" );
 			});
 		}
 	//setInterval(function() {
