@@ -9,7 +9,7 @@ else
   content_server='\n'
   content_server=$content_server'server {\n'
   content_server=$content_server'    listen 80;\n'
-  content_server=$content_server"    server_name ec2-18-209-5-51.compute-1.amazonaws.com;\n"
+  content_server=$content_server"    server_name ner_neshama.bokobza.info;\n"
   content_server=$content_server'    return 301 https://ner_neshama.bokobza.info$request_uri;\n'
   content_server=$content_server'}\n'
 
