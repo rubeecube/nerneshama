@@ -4,7 +4,8 @@ FROM tiangolo/uwsgi-nginx:python3.11
 #sudo certbot certonly  --config-dir=certs --work-dir=certs --logs-dir=certs -d nerneshama.bokobza.info -m ruben@bokobza.info --agree-tos --no-eff-email --standalone
 #sudo chown ubuntu:ubuntu certs/*
 
-#alias launch_attached="cd ~/nerneshama/ ; sudo docker-compose down ; git pull && sudo docker-compose build --no-cache && sudo docker-compose up -e URL=nerneshama.bokobza.info"
+#expoer URL=nerneshama.bokobza.info
+#alias launch_attached="cd ~/nerneshama/ ; sudo docker-compose down ; git pull && sudo docker-compose build --no-cache && sudo docker-compose up"
 #alias launch="launch_attached -d"
 
 COPY app /app/
