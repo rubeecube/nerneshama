@@ -1,6 +1,17 @@
 #! /usr/bin/env sh
 set -e
 
+if [ -z "${URL+x}" ]; then
+  export URL=$URL_DEFAULT
+fi
+
+export CERT=/etc/ssl/certs/cert.pem
+export PRIVKEY=/etc/ssl/private/privkey.pem
+
+if [ ! -e "$CERT" ] || [ ! -f "$PRIVKEY" ]; then
+  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIVKEY -out $CERT -subj '/CN=nerneshama.bokobza.info'
+fi
+
 /uwsgi-nginx-entrypoint.sh
 
 if [ -f /app/nginx.conf ]; then
@@ -9,13 +20,13 @@ else
   content_server='\n'
   content_server=$content_server'server {\n'
   content_server=$content_server'    listen 80;\n'
-  content_server=$content_server"    server_name nerneshama.bokobza.info;\n"
-  content_server=$content_server'    return 301 https://ner_neshama.bokobza.info$request_uri;\n'
+  content_server=$content_server"    server_name $URL;\n"
+  content_server=$content_server"    return 301 https://$URL"'$request_uri;\n'
   content_server=$content_server'}\n'
 
   content_server=$content_server'server {\n'
   content_server=$content_server"    listen 443 ssl default_server;\n"
-  content_server=$content_server"    server_name ner_neshama.bokobza.info;\n"
+  content_server=$content_server"    server_name $URL;\n"
   content_server=$content_server"    ssl_protocols    TLSv1.2;\n"
   content_server=$content_server"    ssl_ciphers AES256+EECDH:AES256+EDH:!aNULL;\n"
   content_server=$content_server"    ssl_prefer_server_ciphers    on;\n"
