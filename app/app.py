@@ -1,3 +1,4 @@
+import datetime
 import enum
 import io
 import json
@@ -165,6 +166,8 @@ def get_neshamot():
                 date_hazcara += " - "
                 date_hazcara += change_date(date_hazcara1_adar).__str__()
 
+        show = (date_hazcara1.to_pydate() - datetime.date.today()).days < 60
+
         neshamot_to_render += [
             {
                 'nom_francais': neshama.name_fr,
@@ -172,6 +175,7 @@ def get_neshamot():
                 'date_niftar_g': date_niftar_g,
                 'date_niftar': date_niftar,
                 'date_sort': date_sort,
+                'show': show,
                 'date_hazcara_g': date_hazcara_g
             }
         ]
@@ -237,6 +241,13 @@ def index(error=None):
     if screen is None:
         return render_template('error.html')
 
+    show_all = False
+    try:
+        if 'show_all' in flask.request.args.keys():
+            show_all = True
+    except Exception:
+        pass
+
     db.create_all()
 
     c = hdate.Location(
@@ -285,7 +296,8 @@ def index(error=None):
         neshamot=get_neshamot(),
         qrcode_url=qrcode_url,
         location=c,
-        screen=screen
+        screen=screen,
+        show_all=show_all
     )
 
 

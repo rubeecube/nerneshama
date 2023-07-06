@@ -11,6 +11,13 @@
 
 {% block scripts %}
 {{super()}}
+<script type="text/javascript">
+{% if show_all %}
+	show_all = true;
+{% else %}
+	show_all = false;
+{% endif %}
+</script>
 <script type="text/javascript" src="/static/scripts/script.js"></script>
 {% endblock %}
 
@@ -22,7 +29,7 @@
 
 <div class="wrapper_flex_row">
 {% if screen == 1 %}
-	{{ render_screen1(neshamot) }}
+	{{ render_screen1(neshamot, show_all) }}
 {% else %}
 	{{ render_screen2(zmanim, qrcode_url) }}
 {% endif %}

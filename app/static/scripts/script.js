@@ -13,6 +13,7 @@ $( document ).ready(function() {
     }
     resize(40);
     //setInterval(function() {
+        console.log(show_all);
         $.get('ajax_data?json_output', {}, function (ajax_data_text) {
             $.get('ajax_data?html_skeleton&ratio=1', {}, function (skeleton1) {
                 $.get('ajax_data?html_skeleton&ratio=2', {}, function (skeleton2) {
@@ -38,6 +39,9 @@ $( document ).ready(function() {
 
                         i = (i+1) % 9;
                         v = (v+1) % ajax_data.length;
+                        while (!show_all && ajax_data[v].show){
+                            v = (v+1) % ajax_data.length;
+                        }
 
                     }, 5000); // Check refresh every 5 sec
                 });

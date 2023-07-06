@@ -1,12 +1,12 @@
 {% from "_screenhelper.html" import render_neshamot %}
 
-{% macro render_screen1(neshamot) %}
+{% macro render_screen1(neshamot, show_all) %}
 <div id="ajax_refresh" class="wrapper_grid" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);">
 {% set screens = [
 	('1','1'), ('2','1'), ('3','1'),
 	('1','2'), ('2','2'), ('3','2'),
 	('1','3'), ('2','3'), ('3','3'),
 	] %}
-{{ render_neshamot(screens, neshamot) }}
+{{ render_neshamot(screens, neshamot, show_all) }}
 </div>
 {% endmacro %}

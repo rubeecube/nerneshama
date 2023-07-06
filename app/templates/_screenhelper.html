@@ -7,7 +7,7 @@
 {% endmacro %}
 
 
-{% macro render_neshamot(screens, neshamot) %}
+{% macro render_neshamot(screens, neshamot, show_all) %}
 	{% set i = namespace(value=0) %}
     {% if neshamot|length == 0 %}
         {% for screen in screens %}
@@ -19,19 +19,23 @@
     {% else %}
         {% for neshama in neshamot %}
             {% if i.value < screens|length %}
-                <div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
-                    {{ render_neshama(neshama, 1) }}
-                </div>
-                {% set i.value = i.value + 1 %}
-            {% endif %}
-        {% endfor %}
-        {% if i.value < screens|length and neshamot|length > screens|length %}
-            {% for neshama in neshamot %}
-                {% if i.value < screens|length %}
+                {% if show_all or neshama.show %}
                     <div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
                         {{ render_neshama(neshama, 1) }}
                     </div>
                     {% set i.value = i.value + 1 %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if i.value < screens|length and neshamot|length > screens|length %}
+            {% for neshama in neshamot %}
+                {% if show_all or neshama.show %}
+                    {% if i.value < screens|length %}
+                        <div id="box_{{i.value}}" class="wrapper_flex grid_box" style="grid-column: {{screens[i.value][0]}}; grid-row: {{screens[i.value][1]}};">
+                            {{ render_neshama(neshama, 1) }}
+                        </div>
+                        {% set i.value = i.value + 1 %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         {% endif %}
