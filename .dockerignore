@@ -1,4 +1,5 @@
 *
-!certs/*
+!certs/live/*
+!certs/archive/*
 !app
 !entrypoint.sh
