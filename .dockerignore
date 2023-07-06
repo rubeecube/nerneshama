@@ -1,4 +1,4 @@
 *
 !certs
 !app
-!entrypoint
+!entrypoint.sh
