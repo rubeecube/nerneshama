@@ -37,6 +37,9 @@ debug = False
 groups = None
 users = None
 
+months_id_hdate_inv = {'Nissan': 1, 'Iyar': 2, 'Sivan': 3, 'Tammuz': 4, 'Av': 5, 'Elul': 6, 'Tishrei': 7, 'Cheshvan': 8,
+                       'Kislev': 9, 'Teves': 10, 'Shevat': 11, 'Adar': 12, 'Adar 1': 12, 'Adar 2': 13}
+
 
 class GenderEnum(enum.Enum):
     male = 1
@@ -87,7 +90,7 @@ def change_date(d: hebrewcal.HebrewDate):
 
 
 def get_neshamot():
-    months_id_hdate_inv = {'Nissan': 1, 'Iyar': 2, 'Sivan': 3, 'Tammuz': 4, 'Av': 5, 'Elul': 6, 'Tishrei': 7, 'Cheshvan': 8, 'Kislev': 9, 'Teves': 10, 'Shevat': 11, 'Adar': 12, 'Adar 1': 12, 'Adar 2': 13}
+    global months_id_hdate_inv
 
     date_today = datetime.datetime.now()
     today_heb = dates.GregorianDate(date_today.year, date_today.month, date_today.day).to_heb()
@@ -288,8 +291,8 @@ def index(error=None):
 
 @app.route('/neshama_add', methods=['GET', 'POST'])
 def run_neshama_add():
+    global months_id_hdate_inv
     form_neshama = AddNeshamaForm(flask.request.form)
-    months_id_hdate_inv = {v: i for i, v in enumerate(dates.utils.MONTH_NAMES)}
 
     if flask.request.method == 'POST':
         gender = form_neshama.gender.data
