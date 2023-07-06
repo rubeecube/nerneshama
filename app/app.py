@@ -87,7 +87,7 @@ def change_date(d: hebrewcal.HebrewDate):
 
 
 def get_neshamot():
-    months_id_hdate_inv = {v: i+1 for i, v in enumerate(dates.utils.MONTH_NAMES)}
+    months_id_hdate_inv = {v: (i+1) for i, v in enumerate(dates.utils.MONTH_NAMES)}
 
     date_today = datetime.datetime.now()
     today_heb = dates.GregorianDate(date_today.year, date_today.month, date_today.day).to_heb()
